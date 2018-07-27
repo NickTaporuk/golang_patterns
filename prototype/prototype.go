@@ -4,7 +4,10 @@
 
 package prototype
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 type ShirtCloner interface {
 	GetClone(s int) (ItemInfoGetter, error)
@@ -22,13 +25,10 @@ func GetShirtsCloner() ShirtCloner {
 
 type ShirtsCache struct{}
 
-func (ss *ShirtsCache) GetClone(s int) (ItemInfoGetter, error) {
-	return nil, errors.New("Not implemented yet")
-}
-
 type ItemInfoGetter interface {
 	GetInfo() string
 }
+
 type ShirtColor byte
 
 type Shirt struct {
@@ -38,7 +38,23 @@ type Shirt struct {
 }
 
 func (s *Shirt) GetInfo() string {
-	return ""
+	return fmt.Sprintf("Shirt with SKU '%s' and Color id %d that costs %f\n", s.SKU, s.Color, s.Price)
+}
+
+func (s *ShirtsCache) GetClone(m int) (ItemInfoGetter, error) {
+	switch m {
+	case White:
+		newItem := *whitePrototype
+		return &newItem, nil
+	case Black:
+		newItem := *blackPrototype
+		return &newItem, nil
+	case Blue:
+		newItem := *bluePrototype
+		return &newItem, nil
+	default:
+		return nil, errors.New("Shirt model not recognized")
+	}
 }
 
 var whitePrototype *Shirt = &Shirt{
@@ -46,7 +62,13 @@ var whitePrototype *Shirt = &Shirt{
 	SKU:   "empty",
 	Color: White,
 }
-
-func (i *Shirt) GetPrice() float32 {
-	return i.Price
+var blackPrototype *Shirt = &Shirt{
+	Price: 16.00,
+	SKU:   "empty",
+	Color: Black,
+}
+var bluePrototype *Shirt = &Shirt{
+	Price: 17.00,
+	SKU:   "empty",
+	Color: Blue,
 }
