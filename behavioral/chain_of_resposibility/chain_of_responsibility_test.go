@@ -14,7 +14,7 @@ func TestChainOfResponsibility(t *testing.T) {
 		},
 	}
 
-	result := handlers.SendRequest(2)
+	result := handlers.SendRequest(3)
 
 	if result != expect {
 		t.Errorf("Expect result to equal %s, but %s.\n", expect, result)
