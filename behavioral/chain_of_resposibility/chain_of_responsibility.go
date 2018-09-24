@@ -3,8 +3,6 @@
 
 package chain_of_responsibility
 
-import "fmt"
-
 // Тип Handler, описывает интерфейс обработчиков в цепочки
 type Handler interface {
 	SendRequest(message int) string
@@ -16,11 +14,11 @@ type ConcreteHandlerA struct {
 }
 
 func (self *ConcreteHandlerA) SendRequest(message int) (result string) {
-	fmt.Println(message)
-	if message == 1 {
-		result = "Im handler 1"
-	} else if self.Next != nil {
-		result = self.Next.SendRequest(message)
+
+	result = "Im handler 1"
+
+	if self.Next != nil {
+		result += self.Next.SendRequest(message)
 	}
 
 	return
@@ -32,10 +30,11 @@ type ConcreteHandlerB struct {
 }
 
 func (self *ConcreteHandlerB) SendRequest(message int) (result string) {
-	if message == 2 {
-		result = "Im handler 2"
-	} else if self.Next != nil {
-		result = self.Next.SendRequest(message)
+
+	result = "Im handler 2"
+
+	if self.Next != nil {
+		result += self.Next.SendRequest(message)
 	}
 	return
 }
@@ -46,10 +45,10 @@ type ConcreteHandlerC struct {
 }
 
 func (self *ConcreteHandlerC) SendRequest(message int) (result string) {
-	if message == 3 {
-		result = "Im handler 3"
-	} else if self.Next != nil {
-		result = self.Next.SendRequest(message)
+
+	result = "Im handler 3"
+	if self.Next != nil {
+		result += self.Next.SendRequest(message)
 	}
 	return
 }

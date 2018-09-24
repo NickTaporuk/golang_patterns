@@ -1,10 +1,8 @@
 package main
 
-import (
-	"github.com/NickTaporuk/golang_patterns/concurrency/search"
-)
+import "github.com/NickTaporuk/golang_patterns/behavioral/chain_of_resposibility"
 
 func main() {
-
-search.Example()
+	//command.Execute()
+	chain_of_responsibility.Example()
 }
